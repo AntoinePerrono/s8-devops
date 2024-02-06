@@ -1,0 +1,37 @@
+version: '3.8' # Spécifie la version de docker-compose utilisée
+
+services: # Définit les services 
+    backend: 
+        container_name: simpleapistudents # Nom du conteneur
+        build: 
+            context: ./back/simple-api-student # Chemin vers le dossier contenant le Dockerfile du backend
+        networks: # Réseaux auxquels ce service sera connecté.
+            - app-network 
+        depends_on: # Liste des services dont le service est dépendant
+            - database # backend attendra que 'database' soit lancé avant de démarrer
+
+    database:
+        container_name: db # Nom du conteneur
+        build: 
+            context: ./data # Chemin vers le dossier contenant le Dockerfile de la base de données
+        networks: # Réseaux auxquels ce service sera connecté.
+            - app-network 
+        volumes: # Volumes a utiliser pour la persistance des données
+            - db:/var/lib/postgresql/data # Montage d'un volume nommé 'db' pour persister les données de la base de données
+
+    httpd: 
+        container_name: webserver # Nom du conteneur 
+        build: 
+            context: httpserver # Chemin vers le dossier contenant le Dockerfile du serveur web
+        ports: # Ports à publier sur l'hôte
+            - "80:80" # Mappe le port 80 du hôte sur le port 80 du conteneur
+        networks: # Réseaux auxquels ce service sera connecté
+            - app-network 
+        depends_on: # Liste des services dont ce service dépend.
+            - backend # httpd attendra que le service 'backend' soit lancé avant de démarrer
+
+networks: # Définition des réseaux utilisés par les services
+    app-network: # Définit un réseau nommé 'app-network'
+
+volumes: # Définition des volumes pour la persistance des données
+    db: # Définit un volume nommé 'db' 
