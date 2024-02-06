@@ -1,11 +1,10 @@
-name: CI devops 2023 # Name of the CI/CD pipeline
+name: Build and push docker image # Name of the CI/CD pipeline
 
 on:
-  # Define when this job should be triggered
-  push: 
-    branches: [main] # Trigger on pushes to the 'main' and 'develop' branches
-  pull_request: 
-    branches: main # Trigger on pull requests targeting the 'main' branch
+  workflow_run:
+    workflows: ["CI devops 2023 - Test Backend"]
+    types:
+      - completed
 
 jobs:
   build-and-push-docker-image:
