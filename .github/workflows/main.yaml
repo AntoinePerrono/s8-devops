@@ -52,15 +52,15 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Build image and push database
-          uses: docker/build-push-action@v3
-          with:
-            context: ./TP1/data
-            tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-database:latest
-            push: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v3
+        with:
+          context: ./TP1/data
+          tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-database:latest
+          push: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Build image and push httpd
-          uses: docker/build-push-action@v3
-          with:
-            context: ./TP1/data
-            tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-webserver:latest
-            push: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v3
+        with:
+          context: ./TP1/data
+          tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-webserver:latest
+          push: ${{ github.ref == 'refs/heads/main' }}
