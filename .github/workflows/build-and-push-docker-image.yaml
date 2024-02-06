@@ -2,7 +2,7 @@ name: Build and push docker image # Name of the CI/CD pipeline
 
 on:
   workflow_run:
-    workflows: ["CI devops 2023 - Test Backend"]
+    workflows: ["test backend"]
     types:
       - completed
 
