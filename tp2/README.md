@@ -13,3 +13,6 @@ Les tests unitaires et d'intégration n'ont pas la même portée. Les tests unit
 **Question 2.1:**
 They simply are java libraries that allow you to run a bunch of docker containers while testing. 
 
+
+**Question 2.2:**
+See [main.yaml](../.github/workflows/main.yaml)

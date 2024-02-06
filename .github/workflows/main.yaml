@@ -1,27 +1,66 @@
-name: CI devops 2023
+name: CI devops 2023 # Name of the CI/CD pipeline
+
 on:
-  #to begin you want to launch this job in main and develop
+  # Define when this job should be triggered
   push: 
-    branches: [main, develop]
+    branches: [main, develop] # Trigger on pushes to the 'main' and 'develop' branches
   pull_request: 
-    branches: main
+    branches: main # Trigger on pull requests targeting the 'main' branch
 
 jobs:
-  test-backend: 
-    runs-on: ubuntu-22.04
+  test-backend: # Define a job named 'test-backend'
+    runs-on: ubuntu-22.04 # Specify the runner environment
+
     steps:
-     #checkout your github code using actions/checkout@v2.5.0
+      # Step 1: Checkout your GitHub code using the 'actions/checkout' action (version 2.5.0)
       - uses: actions/checkout@v2.5.0
 
-     #do the same with another action (actions/setup-java@v3) that enable to setup jdk 17
+      # Step 2: Set up JDK 17 using the 'actions/setup-java' action (version 3)
       - uses: actions/checkout@v3
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          cache: 'maven'
-          java-version: '17'
-          distribution: 'temurin'
+          cache: 'maven' # Cache Maven dependencies
+          java-version: '17' # Set up JDK version 17
+          distribution: 'temurin' # Use the Temurin distribution of Java
 
-     #finally build your app with the latest command
+      # Step 3: Build and test your app with Maven
       - name: Build and test with Maven
-        run: mvn clean verify --file ./tp2/simpleapistudents/pom.xml
+        run: mvn clean verify --file ./tp2/simpleapistudents/pom.xml # Run Maven commands to clean and verify the project
+  
+  build-and-push-docker-image:
+    needs: test-backend
+    # run only when code is compiling and tests are passing
+    runs-on: ubuntu-22.04
+
+    # steps to perform in job
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.5.0
+
+      - name: Login to DockerHub
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+
+
+      - name: Build image and push backend
+        uses: docker/build-push-action@v3
+        with:
+          # relative path to the place where source code with Dockerfile is located
+          context: ./TP1/back/simple-api-student
+          # Note: tags has to be all lower-case
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-simple-api:latest
+          push: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: Build image and push database
+          uses: docker/build-push-action@v3
+          with:
+            context: ./TP1/data
+            tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-database:latest
+            push: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: Build image and push httpd
+          uses: docker/build-push-action@v3
+          with:
+            context: ./TP1/data
+            tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-webserver:latest
+            push: ${{ github.ref == 'refs/heads/main' }}
