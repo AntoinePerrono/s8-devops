@@ -1,0 +1,10 @@
+/home/skafee/cours/s8/devops/tp2/simpleapistudents/src/main/java/fr/takima/training/simpleapi/entity/Department.java
+/home/skafee/cours/s8/devops/tp2/simpleapistudents/src/main/java/fr/takima/training/simpleapi/service/DepartmentService.java
+/home/skafee/cours/s8/devops/tp2/simpleapistudents/src/main/java/fr/takima/training/simpleapi/controller/DepartmentController.java
+/home/skafee/cours/s8/devops/tp2/simpleapistudents/src/main/java/fr/takima/training/simpleapi/service/StudentService.java
+/home/skafee/cours/s8/devops/tp2/simpleapistudents/src/main/java/fr/takima/training/simpleapi/controller/GreetingController.java
+/home/skafee/cours/s8/devops/tp2/simpleapistudents/src/main/java/fr/takima/training/simpleapi/dao/StudentDAO.java
+/home/skafee/cours/s8/devops/tp2/simpleapistudents/src/main/java/fr/takima/training/simpleapi/dao/DepartmentDAO.java
+/home/skafee/cours/s8/devops/tp2/simpleapistudents/src/main/java/fr/takima/training/simpleapi/entity/Student.java
+/home/skafee/cours/s8/devops/tp2/simpleapistudents/src/main/java/fr/takima/training/simpleapi/controller/StudentController.java
+/home/skafee/cours/s8/devops/tp2/simpleapistudents/src/main/java/fr/takima/training/simpleapi/SimpleApiApplication.java
