@@ -6,3 +6,8 @@
     recreate: true
     networks:
       - name: app-network
+    env:
+        USERNAME: usr
+        PASSWORD: pwd
+        URL: db:5432
+        DB: db 

@@ -1,4 +1,4 @@
-- name: Launch databass
+- name: Launch database
   docker_container:
     name: db
     image: skafee/tp-devops-database
@@ -8,3 +8,7 @@
       - db:/var/lib/postgresql/data
     networks:
       - name: app-network
+    env:
+      POSTGRES_DB: db
+      POSTGRES_USER: usr 
+      POSTGRES_PASSWORD: pwd
