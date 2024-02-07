@@ -15,4 +15,19 @@ To see the remote distribution:
 `ansible all -i inventories/setup.yml -m setup -a "filter=ansible_distribution*"`
 
 ## Playbooks
-### Advanced playbook
+**Question 3.2:**  
+See [setup.yml](./ansible/inventories/setup.yml)
+
+New `playbook.yml` with the docker role:
+```yaml
+- hosts: all
+  gather_facts: false
+  become: true
+  roles: 
+    - role: './roles/docker'
+```
+
+All the tasks have been moved to the `main.yml` file in `roles/docker/task`.
+
+## Deploy your App
+

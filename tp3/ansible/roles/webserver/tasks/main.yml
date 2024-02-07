@@ -1,0 +1,12 @@
+- name: Run Webserver
+  docker_container:
+    name: webserver
+    image: skafee/tp-devops-webserver
+    ports: "80:80"
+
+- name: Connect to the network
+  docker_network:
+    name: app-network
+    connected:
+      - webserver
+    appends: true

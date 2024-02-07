@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           cache: 'maven' # Cache Maven dependencies
-          java-version: '11' # Set up JDK version 17
+          java-version: '17' # Set up JDK version 17
           distribution: 'temurin' # Use the Temurin distribution of Java
 
       # Step 3: Build and test your app with Maven

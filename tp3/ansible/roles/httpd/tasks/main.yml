@@ -1,0 +1,11 @@
+- name: Run backend
+  docker_container:
+    name: backend
+    image: skafee/tp-devops-simple-api
+
+- name: Connect to the network
+  docker_network:
+    name: app-network
+    connected:
+      - backend
+    appends: true

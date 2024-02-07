@@ -1,0 +1,13 @@
+- name: Run Database
+  docker_container:
+    name: Database
+    image: skafee/tp-devops-database
+    volumes:
+      - db:/var/lib/postgresql/data
+
+- name: Connect to the network
+  docker_network:
+    name: app-network
+    connected:
+      - Database
+    appends: true

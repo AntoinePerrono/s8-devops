@@ -1,7 +1,8 @@
 - hosts: all
   gather_facts: false
   become: true
-
-  tasks:
-   - name: Test connection
-     ping:
+  roles: 
+    - role: './roles/docker' #call task from this role
+    - role: './roles/httpd' #call task from this role
+    - role: './roles/webserver' #call task from this role
+    - role: './roles/db' #call task from this role
