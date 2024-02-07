@@ -31,3 +31,34 @@ All the tasks have been moved to the `main.yml` file in `roles/docker/task`.
 
 ## Deploy your App
 
+Creation of the network on `docker/main.yml` (and put this in each `roles/main.yaml`):
+```yaml
+    networks:
+      - name: app-network
+```
+
+Add our new container in `playbook.yml`:
+```yaml
+  roles: 
+    - role: './roles/docker' #call task from this role
+    - role: './roles/httpd' #call task from this role
+    - role: './roles/webserver' #call task from this role
+    - role: './roles/db' #call task from this role
+```
+
+Add this each roles `main.yaml`:
+```yaml
+    pull: true
+    recreate: true
+```
+
+Port redirection for **httpd** roles:
+```yaml
+    ports: "80:80"
+```
+
+Use a volume for data persistance in **db** roles
+```yaml
+    volumes:
+      - db:/var/lib/postgresql/data
+```

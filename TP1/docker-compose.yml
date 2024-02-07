@@ -9,6 +9,11 @@ services: # Définit les services
             - app-network 
         depends_on: # Liste des services dont le service est dépendant
             - database # backend attendra que 'database' soit lancé avant de démarrer
+        environment:
+            - USERNAME=usr
+            - PASSWORD=pwd
+            - URL=db:5432
+            - DB=db 
 
     database:
         container_name: db # Nom du conteneur
@@ -18,6 +23,10 @@ services: # Définit les services
             - app-network 
         volumes: # Volumes a utiliser pour la persistance des données
             - db:/var/lib/postgresql/data # Montage d'un volume nommé 'db' pour persister les données de la base de données
+        environment:
+            - POSTGRES_DB=db
+            - POSTGRES_USER=usr 
+            - POSTGRES_PASSWORD=pwd
 
     httpd: 
         container_name: webserver # Nom du conteneur 
