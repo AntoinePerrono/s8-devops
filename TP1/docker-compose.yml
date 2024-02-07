@@ -34,6 +34,16 @@ services: # Définit les services
             context: httpserver # Chemin vers le dossier contenant le Dockerfile du serveur web
         ports: # Ports à publier sur l'hôte
             - "80:80" # Mappe le port 80 du hôte sur le port 80 du conteneur
+            - "8080:8080"
+        networks: # Réseaux auxquels ce service sera connecté
+            - app-network 
+        depends_on: # Liste des services dont ce service dépend.
+            - backend # httpd attendra que le service 'backend' soit lancé avant de démarrer
+
+    front: 
+        container_name: front # Nom du conteneur 
+        build: 
+            context: front # Chemin vers le dossier contenant le Dockerfile du serveur web
         networks: # Réseaux auxquels ce service sera connecté
             - app-network 
         depends_on: # Liste des services dont ce service dépend.
