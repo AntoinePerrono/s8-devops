@@ -1,13 +1,10 @@
-- name: Run Database
+- name: Launch databass
   docker_container:
-    name: Database
+    name: db
     image: skafee/tp-devops-database
+    pull: true
+    recreate: true
     volumes:
       - db:/var/lib/postgresql/data
-
-- name: Connect to the network
-  docker_network:
-    name: app-network
-    connected:
-      - Database
-    appends: true
+    networks:
+      - name: app-network

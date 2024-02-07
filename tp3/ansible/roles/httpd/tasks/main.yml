@@ -1,11 +1,9 @@
-- name: Run backend
+- name: Launch proxy
   docker_container:
-    name: backend
-    image: skafee/tp-devops-simple-api
-
-- name: Connect to the network
-  docker_network:
-    name: app-network
-    connected:
-      - backend
-    appends: true
+    name: webserver
+    image: skafee/tp-devops-webserver
+    pull: true
+    recreate: true
+    ports: "80:80"
+    networks:
+      - name: app-network
