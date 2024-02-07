@@ -1,13 +1,8 @@
 - name: Launch front
   docker_container:
     name: front
-    image: skafee/tp-devops-simple-api
+    image: skafee/tp-devops-front
     pull: true
     recreate: true
     networks:
       - name: app-network
-    env:
-        USERNAME: "{{ POSTGRES_USER }}"
-        PASSWORD: "{{ POSTGRES_PASSWORD }}"
-        URL: "{{ POSTGRES_HOST }}"
-        DB: "{{ POSTGRES_DB }}" 

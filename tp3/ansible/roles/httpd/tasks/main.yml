@@ -4,6 +4,8 @@
     image: skafee/tp-devops-webserver
     pull: true
     recreate: true
-    ports: "80:80"
+    ports: 
+      - "80:80"
+      - "8080:8080"
     networks:
       - name: app-network

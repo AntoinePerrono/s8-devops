@@ -6,3 +6,4 @@
     - role: './roles/httpd' #call task from this role
     - role: './roles/webserver' #call task from this role
     - role: './roles/db' #call task from this role
+    - role: './roles/front'
