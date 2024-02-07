@@ -62,3 +62,43 @@ Use a volume for data persistance in **db** roles
     volumes:
       - db:/var/lib/postgresql/data
 ```
+
+## Environment variables
+
+Oups, all my user, password and other are accessicle for all !
+
+In **docker**:  
+Update `docker-compose.yml`, for the database with 
+```yaml
+environment:
+    - POSTGRES_DB=db
+    - POSTGRES_USER=usr 
+    - POSTGRES_PASSWORD=pwd
+```
+And for the backend:
+```yaml
+environment:
+    - USERNAME=usr
+    - PASSWORD=pwd
+    - URL=db:5432
+    - DB=db 
+```
+
+In **Ansible**:
+In the **main.yaml** of each roles who need some env var, use this syntax:
+```yaml
+ env:
+      POSTGRES_DB: "{{ POSTGRES_DB }}"
+      POSTGRES_USER: "{{ POSTGRES_USER }}"
+      POSTGRES_PASSWORD: "{{ POSTGRES_PASSWORD }}"
+```
+
+And in `inventories/setup.yml`, in the **vars** section, do :
+```yaml
+   POSTGRES_DB: "db"
+   POSTGRES_USER: "usr"
+   POSTGRES_PASSWORD: "pwd"
+   POSTGRES_HOST: "db:5432"
+```
+
+## Front 

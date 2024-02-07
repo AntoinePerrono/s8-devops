@@ -1,6 +1,6 @@
-- name: Launch app
+- name: Launch front
   docker_container:
-    name: simpleapistudents
+    name: front
     image: skafee/tp-devops-simple-api
     pull: true
     recreate: true
