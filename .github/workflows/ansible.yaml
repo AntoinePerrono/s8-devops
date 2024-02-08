@@ -12,23 +12,17 @@ on:
 jobs:
   Deploy_with_ansible:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    # run only when code is compiling and tests are passing
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0 
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
-          # Required, playbook filepath
           playbook: playbook.yml
-          # Optional, directory where playbooks live
           directory: ./tp3/ansible
-          # Optional, ansible configuration file content (ansible.cfg)
-          # Optional, SSH private key
           key: ${{secrets.SERVER_SSH_PRIVATE_KEY}}
-          # Optional, literal inventory file contents
           options: |
             -i inventories/setup.yml
             -u centos

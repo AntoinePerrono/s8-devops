@@ -126,3 +126,38 @@ Add to **playbook.yml**:
 After updating our github workflows, we can see our front on our server.
 
 ## Continuous deployment
+
+We create a new workflows `ansible.yaml`:
+```yaml
+name: Deployment
+
+on:
+  workflow_run:
+    workflows: ["Build and push docker image"]
+    types:
+      - completed
+    branches: 
+      - main
+      - deployment #keep just main on prod env
+
+jobs:
+  Deploy_with_ansible:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: playbook.yml
+          directory: ./tp3/ansible
+          key: ${{secrets.SERVER_SSH_PRIVATE_KEY}}
+          options: |
+            -i inventories/setup.yml
+            -u centos
+            --verbose
+```
+
+Push and voila !
