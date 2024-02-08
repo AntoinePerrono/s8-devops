@@ -10,25 +10,26 @@ on:
       - deployment #keep just main on prod env
 
 jobs:
-  ansible-deploy:
+  Deploy_with_ansible:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on: ubuntu-22.04
-
+    # run only when code is compiling and tests are passing
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2.5.0
-
-      - name: Install Python, pip and ansible
-        run: sudo apt install python3-pip && sudo apt install ansible
-
-      - name: Setup SSH key
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H antoine.perrono.takima.cloud >> ~/.ssh/known_hosts
-          echo "${{secrets.SERVER_SSH_PRIVATE_KEY}}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-        env:
-          SERVER_SSH_PRIVATE_KEY: ${{secrets.SERVER_SSH_PRIVATE_KEY}}
-
-      - name: Deploy the application
-        run: ansible-playbook -i ./ansible/inventories/setup.yml ./ansible/playbook.yml
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          # Required, playbook filepath
+          playbook: playbook.yml
+          # Optional, directory where playbooks live
+          directory: ./ansible
+          # Optional, ansible configuration file content (ansible.cfg)
+          # Optional, SSH private key
+          key: ${{secrets.SERVER_SSH_PRIVATE_KEY}}
+          # Optional, literal inventory file contents
+          options: |
+            -i inventories/setup.yml
+            -u centos
+            --verbose
