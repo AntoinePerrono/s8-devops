@@ -22,7 +22,7 @@ jobs:
         run: sudo apt install python3-pip && sudo apt install ansible
 
       - name: Setup SSH key
-        run:
+        run: |
           mkdir -p ~/.ssh
           ssh-keyscan -H antoine.perrono.takima.cloud >> ~/.ssh/known_hosts
           echo "${{secrets.SERVER_SSH_PRIVATE_KEY}}" > ~/.ssh/id_rsa
