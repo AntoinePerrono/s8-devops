@@ -98,7 +98,31 @@ And in `inventories/setup.yml`, in the **vars** section, do :
    POSTGRES_DB: "db"
    POSTGRES_USER: "usr"
    POSTGRES_PASSWORD: "pwd"
-   POSTGRES_HOST: "db:5432"
+   POSTGRES_PORT: "5432"
+   POSTGRES_HOST: "{{ POSTGRES_DB }}:{{POSTGRES_PORT}}"
 ```
 
 ## Front 
+
+We need to create a new role, in its `tasks/main.yml`, we add:
+```yaml
+- name: Launch front
+  docker_container:
+    name: front
+    image: skafee/tp-devops-front
+    pull: true
+    recreate: true
+    networks:
+      - name: app-network
+```
+
+We need to change some port exposition in others roles main.yaml
+
+Add to **playbook.yml**:
+```yaml
+    - role: './roles/front'
+```
+
+After updating our github workflows, we can see our front on our server.
+
+## Continuous deployment
