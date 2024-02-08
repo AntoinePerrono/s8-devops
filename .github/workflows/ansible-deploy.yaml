@@ -9,7 +9,7 @@ on:
       - [main, deployment] #keep just main on prod env
 
 jobs:
-  deploy-on-ansible:
+  ansible-deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-22.04
 
