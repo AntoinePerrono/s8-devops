@@ -16,3 +16,9 @@ They simply are java libraries that allow you to run a bunch of docker container
 
 **Question 2.2:**
 See [main.yaml](../.github/workflows/main.yaml)
+
+## bonus:
+
+See :
+- [test-backend.yml](../.github/workflows/test-backend.yaml)
+- [build-and-push-docker-image.yml](../.github/workflows/build-and-push-docker-image.yaml)
