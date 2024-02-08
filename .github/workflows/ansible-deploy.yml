@@ -2,12 +2,11 @@ name: Deployment
 
 on:
   workflow_run:
-    workflows:
-      - Build and push docker image
+    workflows: [Build and push docker image]
     types:
       - completed 
     branches:
-      - [main, deployment] #kepp just main on prod env
+      - [main, deployment] #keep just main on prod env
 
 jobs:
   deploy-on-ansible:

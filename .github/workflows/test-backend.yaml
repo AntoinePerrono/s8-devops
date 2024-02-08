@@ -3,7 +3,7 @@ name: test backend # Name of the CI/CD pipeline
 on:
   # Define when this job should be triggered
   push: 
-    branches: [main, develop] # Trigger on pushes to the 'main' and 'develop' branches
+    branches: [main, deployment] # Trigger on pushes to the 'main' and 'develop' branches
 
 jobs:
   test-backend: # Define a job named 'test-backend'
